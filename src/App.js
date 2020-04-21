@@ -34,11 +34,17 @@ class App extends Component {
        this.displayDailyDataOnLoad();
      }
      
+     // options
      displayDailyData() {
+      const options = {
+        limit : 10,
+        sort: { cases: -1 } 
+      };
+
        // query the remote DB and update the component state
        this.db
          .collection("dailyData")
-         .find({}, { limit: 1000 })
+         .find({}, options)
          .asArray()
          .then(countryData => {
            this.setState({countryData});
@@ -81,7 +87,7 @@ class App extends Component {
               <td align="left">{country.recovered}</td>
               <td align="left">{country.deaths}</td>
               <td align="left">{moment(country.updated).startOf('hour').fromNow()}</td>
-              <td align="left"><img src={country.countryInfo.flag} border={3} height={100} width={100}></img></td>
+              <td align="left"><img src={country.countryInfo.flag} border={2} height={50} width={75}></img></td>
             </tr>;
           })}
 
